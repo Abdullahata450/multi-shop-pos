@@ -17,7 +17,7 @@ export const Register = async (req,res)=>{
     try {
         const {shop:shopData , admin} = req.body;
         if(!shopData || !admin){
-            res.status(400).json({error:"Shop and Admin Data is Required"});
+           return res.status(400).json({error:"Shop and Admin Data is Required"});
         }
           const existingUser = await Admin.findOne({ email: admin.email });
     if (existingUser) {
@@ -51,12 +51,12 @@ export const CreateCashier = async (req,res)=>{
         const {name,email,password}=req.body;
 
         if(!name || !email || !password){
-            res.status(400).json({error:"Rquired Data is Missing"});
+          return  res.status(400).json({error:"Rquired Data is Missing"});
         }
 
         const existingCashier = await Cashier.findOne({email:email});
         if(existingCashier){
-            res.status(400).json({error:"Cashier with this email already exists"});
+           return res.status(400).json({error:"Cashier with this email already exists"});
         }
         const hashedPassword = await bycrypt.hash(password,10);
         const cashier = await Cashier.create({
@@ -80,4 +80,38 @@ export const CreateCashier = async (req,res)=>{
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
+}
+
+
+export const Login  = async ( req , res) =>{
+   try {
+      const {email , password} =req.body;
+      if(!email || !password){
+        return res.status(400).json({error:"Email and Password is Required"});
+      }
+      const loginUser = await Cashier.findOne({email:email});
+      if(!loginUser){
+        return res.status(400).json({error:"Cashier not found"});
+      }
+
+      const isMatch = await bycrypt.compare(password,loginUser.password);
+      if(!isMatch){
+        return res.status(400).json({error:"Password is incorrect"});
+      }
+
+      const token = signToken(loginUser);
+      res.status(200).json({
+        message:"Login Successfully",
+        Cashier:{
+            _id:loginUser._id,
+            name:loginUser.name,
+            email:loginUser.email,
+            role:loginUser.role
+        },
+        token
+      })
+
+   } catch (error) {
+      res.status(400).json({ error: error.message });
+   }
 }
