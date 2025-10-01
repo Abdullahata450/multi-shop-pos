@@ -1,15 +1,14 @@
-import mongoose, { Mongoose } from "mongoose";
-
+import mongoose from "mongoose";
 const StockLevelSchema = new mongoose.Schema({
 
 shopId:{
-    type:Mongoose.Types.ObjectId,
+    type:mongoose.Types.ObjectId,
     ref:"Shop",
     required:true,
     index:true,
 },
 productId:{
-    type:Mongoose.Types.ObjectId,
+    type:mongoose.Types.ObjectId,
     ref:"Product",
     required:true,
     index:true,
@@ -20,5 +19,5 @@ quantity:{
 }
 })
 StockLevelSchema.index({shopId:1,productId:1},{unique:true})
-const StockLeve = mongoose.model("StockLevel", StockLevelSchema);
-export default StockLeve
+const StockLevel = mongoose.model("StockLevel", StockLevelSchema);
+export default StockLevel

@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 
 const CashierSchema =  new mongoose.Schema({
+    shopId:{
+         type:String,
+         required:true
+       },
+
    name:{
     type:String,
     required:true,
@@ -18,7 +23,8 @@ const CashierSchema =  new mongoose.Schema({
    role:{
        type:String,
        default:"cashier",
-   }
+   },
+   
 })
 
 const Cashier = mongoose.model("Cashier", CashierSchema);

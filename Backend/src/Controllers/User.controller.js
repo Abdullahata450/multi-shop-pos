@@ -63,7 +63,8 @@ export const CreateCashier = async (req,res)=>{
             name,
             email,
             password:hashedPassword,
-            role:"cashier"
+            role:"cashier",
+            shopId:req.users?.shopId,
         })
         const token = signToken(cashier);
 
@@ -89,9 +90,9 @@ export const Login  = async ( req , res) =>{
       if(!email || !password){
         return res.status(400).json({error:"Email and Password is Required"});
       }
-      const loginUser = await Cashier.findOne({email:email});
+      const loginUser = await Cashier.findOne({email:email}) || await Admin.findOne({email:email});
       if(!loginUser){
-        return res.status(400).json({error:"Cashier not found"});
+        return res.status(400).json({error:"Login failed Please Try again Later"});
       }
 
       const isMatch = await bycrypt.compare(password,loginUser.password);
