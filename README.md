@@ -44,8 +44,8 @@ multi-shop-pos-backend/
 │   ├── routes/        # API route definitions
 │   ├── controllers/   # Business logic for routes
 │   ├── middleware/    # Auth & shop scoping
-│   ├── utils/         # Helper functions
-│   └── server.js      # App entry point
+│   ├── config/        # Db Connection functions
+│   └── index.js       # App entry point
 │
 │── .env               # Environment variables
 │── package.json
