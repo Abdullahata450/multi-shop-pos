@@ -15,7 +15,7 @@ jobs:
            node-version: 18
       - name: Install Dependencies
         run: npm install
-        working-directory: Backend
+        working-directory: ./Backend
         
       - name: Build App
         run: npm run build
