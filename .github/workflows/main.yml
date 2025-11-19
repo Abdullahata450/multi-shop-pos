@@ -19,6 +19,7 @@ jobs:
         
       - name: Build App
         run: npm run build
+        working-directory: ./Backend
         
       
       
