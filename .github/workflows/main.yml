@@ -1,0 +1,25 @@
+name: make-build-NodeJs_App
+on:
+    push:
+      branches: [ main ]
+jobs:
+  build-nodejs-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v4.3.1
+      - name: Setup Nodejs
+      - uses: actions/setup-node@v6.0.0
+        with:
+           node-version: 18
+      - name: Install Dependencies
+        run: npm install
+      - name: Build App
+        run: npm run build
+        
+      
+      
+
+
+    
